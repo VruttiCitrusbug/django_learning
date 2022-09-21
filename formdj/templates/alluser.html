@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {%for ele in object_list%}
+    <li>{{ele.id}}</li>
+    <li>{{ele.name}}</li>
+    <li>{{ele.email}}</li>
+    <li>{{ele.phno}}</li>
+    <a href='/delete/{{ele.id}}'>Delete</a>
+    <a href='/update/{{ele.id}}'>Update</a>
+    <hr>
+    {%empty%}
+     no obj
+    {%endfor%}
+    <a href="http://127.0.0.1:8000/">Add User</a>
+
+</body>
+</html>

@@ -56,7 +56,7 @@ ROOT_URLCONF = 'formdj.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,r'C:\Users\Vrutti\Desktop\py\templates')],
+        'DIRS': [os.path.join(BASE_DIR,r"C:\Users\Vrutti\Desktop\py\django\django_learning\formdj\templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -124,3 +124,4 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL =   'formdjapp.User'
+LOGIN_REDIRECT_URL='signin'

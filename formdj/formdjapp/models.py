@@ -33,7 +33,7 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser,PermissionsMixin):
     username=None
     email=models.EmailField(max_length=60,blank=False,unique=True)
-    phno=models.IntegerField(max_length=10,blank=True,null=True)
+    phno=models.CharField(max_length=10,blank=True,null=True)
     # last_login_time=models.DateTimeField(null=True,blank=True)
     # last_logout_time=models.DateTimeField(null=True,blank=True)
     name=models.CharField(max_length=100)
