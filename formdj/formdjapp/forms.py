@@ -29,12 +29,6 @@ class userform(forms.ModelForm):
             # labels = {'email':'Email','password':'Password','name':'Name','phno':'Phone Number'}
             # super().__init__(*args,**kwargs)
             # cleaned_data = super().clean()
-# class logPage(forms.ModelForm):
-#     class Meta:
-#         model = User
-#         fields = ['email','password']
-#     def clean(self):
-#         cleaned_data = super().clean()
-#         E = cleaned_data.get('email')
-#         P = cleaned_data.get('password')
-#         return self.cleaned_data
+class loginf(forms.Form):
+    email = forms.EmailField(max_length=60)
+    password = forms.CharField(widget=forms.PasswordInput())

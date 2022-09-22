@@ -3,10 +3,10 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
 from django.contrib.auth.views import LoginView,LogoutView,PasswordChangeView,PasswordResetView,PasswordResetDoneView,PasswordResetConfirmView,PasswordResetCompleteView
 from django.views.generic.base import TemplateView
-from django.views.generic import View
-# from django.contrib.auth.models import User,auth
+# from django.views.generic import View
+from django.contrib.auth.models import auth
 # from django.views.generic.edit import FormView
-from .forms import userform
+from .forms import loginf, userform
 from .models import User
 from django.shortcuts import render,redirect
 
@@ -51,9 +51,23 @@ class delete(DeleteView):
     model=User
     template_name='delete.html'
     success_url='/login'
-class login(LoginView):
-    template_name='login.html'
-    success_url='signin'
+# class login(LoginView):
+#     template_name='login.html'
+#     success_url='signin'
+def login(request):
+    if request.method  == 'POST':
+        form = loginf(request.POST)
+        if form.is_valid():
+            email =  form.cleaned_data.get('email')
+            password = form.cleaned_data.get('password')
+            print(email)
+            user=auth.authenticate(email=email,password=password)
+            if user is not None:
+                auth.login(request,user)
+                return redirect('signin/')
+            else:
+                return HttpResponse("invalid data")
+    return render(request,'login.html',{'form':loginf})
 # def login(request):
 #     if request.method=='POST':
 #         email=request.POST.get('email')
