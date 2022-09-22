@@ -11,5 +11,7 @@ urlpatterns = [
    path('signin/',views.signin.as_view(),name="signin"),
    path('logout',views.logout.as_view(),name="logout"),
    path('changepass',views.changepass.as_view(),name="changepass"),
-   # path('forget',views.forget.as_view(),name="forget")
+   # path('forget',views.forget.as_view(),name="forget"),
+   # path('change',views.change.as_view(),name="change"),
+   # path('confirm',views.change.as_view(),name="confirm")
 ]

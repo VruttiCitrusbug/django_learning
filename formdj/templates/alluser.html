@@ -12,13 +12,19 @@
     <li>{{ele.name}}</li>
     <li>{{ele.email}}</li>
     <li>{{ele.phno}}</li>
+    {%if request.user.is_superuser or request.user.id == ele.id%}
     <a href='/delete/{{ele.id}}'>Delete</a>
     <a href='/update/{{ele.id}}'>Update</a>
+    {%endif%}
     <hr>
     {%empty%}
      no obj
     {%endfor%}
+    {%if request.user.is_superuser%}
     <a href="http://127.0.0.1:8000/">Add User</a>
-
+    {%endif%}
+    <a href="/logout">Logout</a>
+{% comment %} 
+    <a href="#/changepass">Changepass</a> {% endcomment %}
 </body>
 </html>
