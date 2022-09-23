@@ -1,3 +1,5 @@
+import email
+from django import forms
 from django.http import HttpResponse
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
@@ -6,9 +8,10 @@ from django.views.generic.base import TemplateView
 # from django.views.generic import View
 from django.contrib.auth.models import auth
 # from django.views.generic.edit import FormView
-from .forms import loginf, userform
+from .forms import loginf, userform,forgetpass
 from .models import User
 from django.shortcuts import render,redirect
+import re
 
 # class signup(FormView):
 
@@ -44,9 +47,9 @@ class all(ListView):
 class update(UpdateView):
     template_name='formlog.html'
     model = User
-    fields = ['email','password','name','phno']
-    labels = {'email':'Email','password':'Password','name':'Name','phno':'Phone Number'}
-    success_url='/login'
+    fields = ['email','name','phno']
+    labels = {'email':'Email','name':'Name','phno':'Phone Number'}
+    success_url='/all'
 class delete(DeleteView):
     model=User
     template_name='delete.html'
@@ -88,15 +91,59 @@ class logout(LogoutView):
 class changepass(PasswordChangeView):
     template_name='changepass.html'
     success_url='/logout'
+
+def forget(request):
+    if request.method  == 'POST':
+        form = forgetpass(request.POST)
+        if form.is_valid():
+            email =  form.cleaned_data.get('email')
+            password =  form.cleaned_data.get('password')
+            password1 =  form.cleaned_data.get('confirmpassword')
+            if User.objects.filter(email=email).exists():
+                if password==password1:
+                    if len(password)<8:
+                        return HttpResponse("password greater then 8 characeters")
+                    if not re.match(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?& ])[A-Za-z\d@$!#%*?&]{8,18}$',password):
+                        return HttpResponse("password must contain special character, one Capital latter,and one numeric value")
+                    else:
+                        user=User.objects.get(email=email)
+                        user.set_password(password)
+                        user.save()
+                        return redirect('/login')
+            return HttpResponse("password and confirm password are not match")
+    return render(request,'forget.html',{'form':forgetpass})
+
+# def forget(request):
+#     if request.method  == 'POST':
+#         form = forgetpass(request.POST)
+#         if form.is_valid():
+#             email =  form.cleaned_data.get('email')
+#             password =  form.cleaned_data.get('password')
+#             # password1 =  form.cleaned_data.get('confirmpassword')
+#             if User.objects.filter(email=email).exists():
+#                         user=User.objects.get(email=email)
+#                         user.set_password(password)
+#                         user.save()
+#                         return redirect('/login')
+#             else:
+#                 return redirect('/')
+#     return render(request,'forget.html',{'form':forgetpass})   
+
+
+
+
+
+
+
 # class forget(PasswordResetView):
 #     template_name='forget.html'
-#     success_url='/change'
-# class change(PasswordResetDoneView):
-#     template_name='change.html'
-#     success_url='/confirm'
+#     success_url='/password_reset_confirm/<uidb64>/<token>/'
+
+
 # class confirm(PasswordResetConfirmView):
 #     template_name='confirm.html'
-#     success_url='/done'
+
+
 # class done(PasswordResetCompleteView):
-#     template_name='done.html'
+#     template_name='confirm.html'
 #     success_url='/login'

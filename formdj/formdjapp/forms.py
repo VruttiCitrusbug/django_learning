@@ -32,3 +32,42 @@ class userform(forms.ModelForm):
 class loginf(forms.Form):
     email = forms.EmailField(max_length=60)
     password = forms.CharField(widget=forms.PasswordInput())
+class forgetpass(forms.Form):
+    email = forms.EmailField(max_length=60)
+    password =  forms.CharField(widget=forms.PasswordInput())
+    confirmpassword= forms.CharField(widget=forms.PasswordInput())
+
+
+
+
+
+
+
+
+
+    
+    # def clean(self):
+    #     cleaned_data = super().clean()
+    #     valpass =cleaned_data['password']
+    #     valconfirmpass =cleaned_data['confirmpassword']
+    #     if len(valpass)<8:
+    #             raise forms.ValidationError("password greater then 8 characeters")
+    #     if not re.match(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?& ])[A-Za-z\d@$!#%*?&]{8,18}$',valpass):
+    #             raise forms.ValidationError("password must contain special character, one Capital latter,and one numeric value")
+    #     if valpass!=valconfirmpass:
+    #             raise forms.ValidationError("password and confirm password are not same")
+    #     return cleaned_data
+# class forgetconfirm(forms.Form):
+#     password =  forms.CharField(widget=forms.PasswordInput())
+#     confirmpassword= forms.CharField(widget=forms.PasswordInput())
+    # def clean(self):
+    #     cleaned_data = super().clean()
+    #     valpass =cleaned_data['password']
+    #     valconfirmpass =cleaned_data['confirmpassword']
+    #     if len(valpass)<8:
+    #             raise forms.ValidationError("password greater then 8 characeters")
+    #     if not re.match(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?& ])[A-Za-z\d@$!#%*?&]{8,18}$',valpass):
+    #             raise forms.ValidationError("password must contain special character, one Capital latter,and one numeric value")
+    #     if valpass!=valconfirmpass:
+    #             raise forms.ValidationError("password and confirm password are not same")
+    #     return self.cleaned_data
